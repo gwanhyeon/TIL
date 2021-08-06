@@ -221,3 +221,201 @@ System.out.println(oodLengthList);
 List<String> evenLengthList = partition.get(true);
 System.out.println(evenLengthList);
 ```
+
+
+# 전체 소스 코드 
+
+```java
+package java8;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamCreate {
+	
+	public static void main(String[] args) throws IOException {
+		
+		// Create stream from collection
+		List<Integer> collectionsList = new ArrayList<>();
+		collectionsList.add(1); collectionsList.add(2);
+		collectionsList.stream()
+		.forEach(System.out::println);
+		
+		// Create stream from arrays
+		String[] arr = new String[] {"one","two"};
+		Stream<String> stream = Arrays.stream(arr);
+		stream.forEach(e -> System.out.print(e));
+		System.out.println();
+		
+		// Create a stream using only a specific part of the array
+		Stream<String> stream2 = Arrays.stream(arr, 1,3);
+		stream2.forEach(e -> System.out.print(e + " "));
+		
+		// Create streams from variable parameters 
+		Stream<Double> stream3 = Stream.of(4.2, 2.5, 3.1, 1.9);
+		stream.forEach(System.out::println);
+		
+		// Create streams from consecutive integers in a specified range
+		IntStream stream4 = IntStream.range(1,4);
+		stream4.forEach(e -> System.out.println(e + " "));
+		
+		IntStream stream5 = IntStream.rangeClosed(1, 4);
+		stream5.forEach(e -> System.out.println(e + " "));
+		
+		// Create a stream of random numbers of a particular type
+		IntStream stream6 = new Random().ints(4);
+		stream.forEach(System.out::println);
+
+		// create lambda Expression
+		Stream<Integer> stream7 = Stream.iterate(2, n -> n+2);
+		stream7.forEach(System.out::println);
+		
+		// Create stream from files 
+		Stream<String> stream8 = Files.lines(Paths.get("file.txt"));
+		
+		// Create an empty stream
+		Stream<Object> stream9 = Stream.empty();
+		System.out.println(stream9.count());
+	}
+
+}
+
+
+package java8;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamMiddleCalculation {
+	public static void main(String[] args) {
+		// stream filter(), distinct
+		IntStream stream1 = IntStream.of(10,20,30,40,50);
+		IntStream stream2 = IntStream.of(20,40,60,80,100);
+		
+		// stream 중복된 요소를 제거함
+		stream1.distinct().forEach(e -> System.out.print(e + " "));
+		System.out.println();
+		
+		// stream 홀수만 골라내기
+		stream2.filter(n -> n % 2 != 0).forEach(o -> System.out.println("o : " + o));
+		
+		// map(), flatMap
+		Stream<String> stream3 = Stream.of("HTML", "CSS", "JAVA", "JAVASCRIPT");
+		stream3.map(s -> s.toLowerCase()).forEach(System.out::println);
+		
+		// 여러 문자열 스트림 변환 
+		String[] arrList = {"hh", "ee", "ll","ll", "oo"};
+		Stream<String> stream4 = Arrays.stream(arrList);
+		stream4.flatMap(s -> Stream.of(s.split(" +"))).forEach(System.out::println);
+		
+		// limit(), skip()
+		IntStream stream5 = IntStream.range(0, 10);
+		IntStream stream6 = IntStream.range(0, 10);
+		IntStream stream7 = IntStream.range(0, 10);
+		
+		stream5.skip(4).forEach(n -> System.out.print(n + " "));
+		System.out.println();
+		stream6.limit(5).forEach(n -> System.out.print(n + " "));
+		System.out.println();
+		stream7.skip(3).limit(5).forEach(n -> System.out.print(n + " "));
+		
+		
+		// sorted - desc
+		Stream<String> stream8 = Stream.of("kgh", "kim");
+		Stream<String> stream9 = Stream.of("kgh1", "gwanhyeon");
+		stream8.sorted().forEach(s -> System.out.println("s : " + s));
+		
+		
+		// sorted - asc
+		System.out.println();
+		stream9.sorted(Comparator.reverseOrder()).forEach(s -> System.out.print("s : " + s));
+		
+		
+		
+	}
+
+}
+
+package java8;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamFinalCalculation {
+	public static void main(String[] args) {
+		// forEach()
+		Stream<String> stream = Stream.of("one", "two");
+		stream.forEach(System.out::println);
+		
+		// reduce()
+		Stream<String> stream1 = Stream.of("One", "Two");
+		Stream<String> stream2 = Stream.of("One", "TWo");
+		Optional<String> result1 = stream1.reduce((s1,s2) -> s1 + " ++ " + s2);
+		result1.ifPresent(System.out::println);
+		String result2 = stream2.reduce("Start",(s1, s2) -> s1 + " ++ " + s2);
+		System.out.println(result2);
+		
+		// findFist(), findAny()
+		IntStream stream3 = IntStream.of(10,20,30,40,50);
+		IntStream stream4 = IntStream.of(20,30,40,50,60);
+		
+		// anyMatch, allMatch, noneMatch()
+		System.out.println(stream3.anyMatch(n -> (n > 80) ));
+		System.out.println(stream4.allMatch(n -> (n > 80) ));
+		
+		// count(), min(), max()
+		IntStream stream5 = IntStream.of(30,90,120);
+		IntStream stream6 = IntStream.of(30,90,120);
+		
+		System.out.println(stream5.count());
+		System.out.println(stream6.max().getAsInt());
+		
+		// sum(), average()
+		IntStream stream7 = IntStream.of(100,200);
+		DoubleStream stream8 = DoubleStream.of(10.5, 20.5);
+		System.out.println(stream7.sum());
+		System.out.println(stream8.average().getAsDouble());
+		
+		// collect()
+		Stream<String> stream9 = Stream.of("One", "Two");
+		List<String> list = stream9.collect(Collectors.toList());
+		Iterator<String> iter = list.iterator();
+		while(iter.hasNext()) {
+			System.out.println(iter.next() +  " ");
+		}
+		
+		// Collectors 클래스의 partitioningBy()
+		Stream<String> stream10 = Stream.of("kgh", "kim");
+		Map<Boolean, List<String>> partition = stream10.collect(Collectors.partitioningBy(s -> (s.length() % 2) == 0 ));
+		
+		List<String> oodLengthList = partition.get(false);
+		System.out.println(oodLengthList);
+		List<String> evenLengthList = partition.get(true);
+		System.out.println(evenLengthList);
+		
+	}
+
+}
+```
+
+
+
+
+
+
