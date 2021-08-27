@@ -8,11 +8,11 @@
 
 html > body > p, div > h1 > span
 
-- <body>의 부모 요소: <html> ↔ <html>의 자식 요소: <body>
-- <div>의 부모 요소: <body> ↔ <body>의 자식 요소: <div>, <p>
-- <h1>의 부모 요소: <div> ↔ <div>의 자식 요소: <h1>
-- <span>의 부모 요소: <h1> ↔ <h1>의 자식 요소: <span>
-- <p>의 부모 요소: <body> ↔ <body>의 자식 요소: <div>, <p>
+- `<body>`의 부모 요소: `<html>` ↔ `<html>`의 자식 요소: `<body>`
+- `<div>`의 부모 요소: `<body>` ↔ `<body>`의 자식 요소: `<div>, <p>`
+- `<h1>`의 부모 요소: `<div>` ↔ `<div>`의 자식 요소: `<h1>`
+- `<span>`의 부모 요소: `<h1>` ↔ `<h1>`의 자식 요소: `<span>`
+- `<p>`의 부모 요소: `<body>` ↔ `<body>`의 자식 요소: `<div>, <p>`
 
 ## 조상과 자손
 
@@ -24,11 +24,11 @@ html > body > p, div > h1 > span
 
 html > body > p, div > h1 > span
 
-- <body>의 조상 요소: <html> ↔ <html>의 자손 요소: <body>, <div>, <h1>, <span>, <p>
-- <div>의 조상 요소: <html>, <body> ↔ <body>의 자손 요소: <div>, <h1>, <span>, <p>
-- <h1>의 조상 요소: <html>, <body>, <div> ↔ <div>의 자손 요소: <h1>, <span>
-- <span>의 조상 요소: <html>, <body>, <div>, <h1> ↔ <h1>의 자손 요소: <span>
-- <p>의 조상 요소: <html>, <body> ↔ <body>의 자손 요소: <div>, <h1>, <span>, <p>
+- `<body>`의 조상 요소: `<html>` ↔ `<html>`의 자손 요소: `<body>, <div>, <h1>, <span>, <p>`
+- `<div>`의 조상 요소: `<html>, <body>` ↔ `<body>`의 자손 요소: `<div>, <h1>, <span>, <p>`
+- `<h1>`의 조상 요소: `<html>, <body>`, `<div>` ↔ `<div>`의 자손 요소: `<h1>, <span>`
+- `<span>`의 조상 요소: `<html>, <body>`, `<div>`, `<h1>` ↔ <h1>의 자손 요소: `<span>`
+- `<p>`의 조상 요소: `<html>, <body>` ↔ `<body>`의 자손 요소: `<div>, <h1>, <span>, <p>`
 
 ## 형제
 
