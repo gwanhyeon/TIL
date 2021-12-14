@@ -27,8 +27,9 @@ html > body > p, div > h1 > span
 - `<body>`의 조상 요소: `<html>` ↔ `<html>`의 자손 요소: `<body>, <div>, <h1>, <span>, <p>`
 - `<div>`의 조상 요소: `<html>, <body>` ↔ `<body>`의 자손 요소: `<div>, <h1>, <span>, <p>`
 - `<h1>`의 조상 요소: `<html>, <body>`, `<div>` ↔ `<div>`의 자손 요소: `<h1>, <span>`
-- `<span>`의 조상 요소: `<html>, <body>`, `<div>`, `<h1>` ↔ <h1>의 자손 요소: `<span>`
-- `<p>`의 조상 요소: `<html>, <body>` ↔ `<body>`의 자손 요소: `<div>, <h1>, <span>, <p>`
+- `<span>`의 조상 요소: `<html>, <body>`, `<div>`, `<h1>` ↔ `<h1>` 의 자손 요소: `<span>`
+- `<p>`의 조상 요소: `<html>, <body>` ↔ `<body>` 의 자손 요소: `<div>, <h1>, <span>, <p>`
+
 
 ## 형제
 
