@@ -75,6 +75,8 @@ COUNT(*) OVER()함수는 전체행에 대한 카운트를 진행할때 사용하
 |2| JAVA의 개수
 |2| PYTHON의 개수
 
+--- 
+
 > 조건 다중
 
 COUNT(*) OVER(PARTITION BY CONTENT, NAME)
@@ -97,6 +99,7 @@ COUNT(*) OVER(PARTITION BY CONTENT, NAME)
 |2| kim, JAVA의 개수
 |1| park, PYTHON의 개수
 
+---
 
 단일 조건과 다중 조건에 따른 결과값이 달라지는것을 확인하셨나요? OVER() 함수는 그룹에 대한 PARTITION BY 의 조건을 맵핑시켜 데이터를 노출시켜주는 것을 알 수 있었습니다.
 
