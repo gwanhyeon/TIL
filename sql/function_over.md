@@ -8,10 +8,10 @@ over함수는 보통 order by, group by에 대한 쿼리를 개선하기 위해 
 ```sql
 SELECT NAME, PRICE
 FROM (
-    SELECT BRITH, PRICE,
+    SELECT BIRTH, PRICE,
     SUM(TOTAL_PRICE) AS PRICE
     FROM USER
-    GROUP BY BRITH
+    GROUP BY BIRTH
     ORDER BY BIRTH DESC
 )
 ```
