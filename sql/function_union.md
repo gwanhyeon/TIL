@@ -14,6 +14,22 @@ SELECT A.NAME FROM A
 가장 좋은 예시는 다양한 게시판에서 가장 최신의 글을 가져오는 경우를 들 수 있다.
 A,B,C 의 게시판의 글을 UNION ALL로 묶어서 가져온 후 최신의 글을 뽑아내는 것을  UNION ALL로 처리할 수 있겠다.
 
+유의할점: union 절을 사용할때는 데이터 컬럼의 개수와 데이터 타입이 반드시 맞아야한다.
 
-
-
+```sql
+SELECT T.NAME, T.PHONE
+FROM 
+(
+  (
+    SELECT A.NAME
+         , A.PHONE
+      FROM USER1 A
+  )
+  UNION ALL 
+  (
+    SELECT B.NAME
+         , B.PHONE
+      FROM USER2 B
+  )
+) T
+```
