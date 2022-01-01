@@ -53,3 +53,131 @@ null의 객체가 아닐 경우
 
 - Grouping function calls on an object: `with`
 함수간의 그룹핑 처리 
+
+
+
+Distinctions﻿
+Because the scope functions are all quite similar in nature, it's important to understand the differences between them. There are two main differences between each scope function:
+
+The way to refer to the context object.
+
+The return value.
+
+Context object: this or it﻿
+Inside the lambda of a scope function, the context object is available by a short reference instead of its actual name. Each scope function uses one of two ways to access the context object: as a lambda receiver (this) or as a lambda argument (it). Both provide the same capabilities, so we'll describe the pros and cons of each for different cases and provide recommendations on their use.
+```kotlin
+fun main() {
+    val str = "Hello"
+    // this
+    str.run {
+        println("The string's length: $length")
+        //println("The string's length: ${this.length}") // does the same
+    }
+​
+    // it
+    str.let {
+        println("The string's length is ${it.length}")
+    }
+}
+```
+# this﻿
+run, with, and apply refer to the context object as a lambda receiver - by keyword this. Hence, in their lambdas, the object is available as it would be in ordinary class functions. In most cases, you can omit this when accessing the members of the receiver object, making the code shorter. On the other hand, if this is omitted, it can be hard to distinguish between the receiver members and external objects or functions. So, having the context object as a receiver (this) is recommended for lambdas that mainly operate on the object members: call its functions or assign properties.
+```
+val adam = Person("Adam").apply { 
+    age = 20                       // same as this.age = 20 or adam.age = 20
+    city = "London"
+}
+println(adam)
+```
+
+# it﻿
+In turn, let and also have the context object as a lambda argument. If the argument name is not specified, the object is accessed by the implicit default name it. it is shorter than this and expressions with it are usually easier for reading. However, when calling the object functions or properties you don't have the object available implicitly like this. Hence, having the context object as it is better when the object is mostly used as an argument in function calls. it is also better if you use multiple variables in the code block.
+```
+fun getRandomInt(): Int {
+    return Random.nextInt(100).also {
+        writeToLog("getRandomInt() generated value $it")
+    }
+}
+​
+val i = getRandomInt()
+println(i)
+```
+
+Additionally, when you pass the context object as an argument, you can provide a custom name for the context object inside the scope.
+```
+fun getRandomInt(): Int {
+    return Random.nextInt(100).also { value ->
+        writeToLog("getRandomInt() generated value $value")
+    }
+}
+​
+val i = getRandomInt()
+println(i)
+```
+Return value﻿
+The scope functions differ by the result they return:
+
+apply and also return the context object.
+
+let, run, and with return the lambda result.
+
+These two options let you choose the proper function depending on what you do next in your code.
+
+Context object﻿
+The return value of apply and also is the context object itself. Hence, they can be included into call chains as side steps: you can continue chaining function calls on the same object after them.
+```
+val numberList = mutableListOf<Double>()
+numberList.also { println("Populating the list") }
+    .apply {
+        add(2.71)
+        add(3.14)
+        add(1.0)
+    }
+    .also { println("Sorting the list") }
+    .sort()
+```
+
+They also can be used in return statements of functions returning the context object.
+```
+fun getRandomInt(): Int {
+    return Random.nextInt(100).also {
+        writeToLog("getRandomInt() generated value $it")
+    }
+}
+​```
+val i = getRandomInt()
+Open in Playground →
+Target platform: JVM
+Running on kotlin v.1.6.10
+Lambda result﻿
+let, run, and with return the lambda result. So, you can use them when assigning the result to a variable, chaining operations on the result, and so on.
+```
+
+```kotlin
+val numbers = mutableListOf("one", "two", "three")
+val countEndsWithE = numbers.run { 
+    add("four")
+    add("five")
+    count { it.endsWith("e") }
+}
+println("There are $countEndsWithE elements that end with e.")
+Open in Playground →
+Target platform: JVM
+Running on kotlin v.1.6.10
+Additionally, you can ignore the return value and use a scope function to create a temporary scope for variables.
+```
+
+```kotlin
+val numbers = mutableListOf("one", "two", "three")
+with(numbers) {
+    val firstItem = first()
+    val lastItem = last()        
+    println("First item: $firstItem, last item: $lastItem")
+}
+val numbers = mutableListOf("one", "two", "three")
+with(numbers) {
+    val firstItem = first()
+    val lastItem = last()        
+    println("First item: $firstItem, last item: $lastItem")
+}
+```
