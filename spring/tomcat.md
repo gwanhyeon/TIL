@@ -70,7 +70,7 @@ Context는 <Host>내에 배포된 어플리캐이션이다.
 <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
   <Context docBase="특정경로" path="/application1" reloadable="true">
   </Context>
-...
+```
 
 > Context 설정 방법
 
@@ -84,7 +84,7 @@ $CATALINA_BASE/conf/context.xml 파일은 Global context 파일이기 때문에 
 $CATALINA_BASE/conf/<Engie>/<Host>/context.xml default 파일은 <Host>의 Global Context파일이기 때문에 <Host>하위 모든 애플리케이션이 사용한다.
 
 
-
+> reference
 
 https://exhibitlove.tistory.com/312
 https://cornswrold.tistory.com/347
