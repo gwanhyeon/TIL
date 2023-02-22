@@ -160,3 +160,28 @@ https://techblog.woowahan.com/2628/
 https://www.eclipse.org/mat/
 
 https://techblog.woowahan.com/2572/
+
+
+# 실제로 적용해보기 
+
+$jps -v
+
+```xml
+41827 Jps -Dapplication.home=/Users/kgh/Library/Java/JavaVirtualMachines/openjdk-17.0.1/Contents/Home -Xms8m -Djdk.module.main=jdk.jcmd
+38983 GradleDaemon --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED -XX:MaxMetaspaceSize=256m -XX:+HeapDumpOnOutOfMemoryError -Xms256m -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=KR -Duser.language=ko -Duser.variant
+12010 Launcher -Xmx700m -Djava.awt.headless=true -Dpreload.project.path=/Users/kgh/dev/java-algorithm -Dpreload.config.path=/Users/kgh/Library/Application Support/JetBrains/IntelliJIdea2021.3/options -Dexternal.project.config=/Users/kgh/Library/Caches/JetBrains/IntelliJIdea2021.3/external_build_system/java-algorithm.cce653d7 -Dcompile.parallel=false -Drebuild.on.dependency.change=true -Djdt.compiler.useSingleThread=true -Daether.connector.resumeDownloads=false -Dio.netty.initialSeedUniquifier=2916156715717501739 -Dfile.encoding=UTF-8 -Duser.language=ko -Duser.country=KR -Didea.paths.selector=IntelliJIdea2021.3 -Didea.home.path=/Applications/IntelliJ IDEA.app/Contents -Didea.config.path=/Users/kgh/Library/Application Support/JetBrains/IntelliJIdea2021.3 -Didea.plugins.path=/Users/kgh/Library/Application Support/JetBrains/IntelliJIdea2021.3/plugins -Djps.log.dir=/Users/kgh/Library/Logs/JetBrains/IntelliJIdea2021.3/build-log -Djps.fallback.jdk.home=/Applications/IntelliJ IDEA.app/Contents/jbr/Contents/Home -Djps.fallback.jdk.v
+41594 MembershipApplication -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.profiles.active=local -Dspring.output.ansi.enabled=always -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50130:/Applications/IntelliJ IDEA.app/Contents/bin -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dfile.encoding=UTF-8
+671  -Xms128m -Xmx750m -XX:ReservedCodeCacheSize=512m -XX:+IgnoreUnrecognizedVMOptions -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=50 -XX:CICompilerCount=2 -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -ea -Dsun.io.useCanonCaches=false -Djdk.http.auth.tunneling.disabledSchemes="" -Djdk.attach.allowAttachSelf=true -Djdk.module.illegalAccess.silent=true -Dkotlinx.coroutines.debug=off -XX:ErrorFile=/Users/kgh/java_error_in_idea_%p.log -XX:HeapDumpPath=/Users/kgh/java_error_in_idea.hprof -Xmx2048m -Djb.vmOptionsFile=/Users/kgh/Library/Application Support/JetBrains/IntelliJIdea2021.3/idea.vmoptions -Dsplash=true -Didea.home.path=/Applications/IntelliJ IDEA.app/Contents -Didea.jre.check=true -Didea.executable=idea -Djava.system.class.loader=com.intellij.util.lang.PathClassLoader -Didea.paths.selector=IntelliJIdea2021.3 -Didea.vendor.name=JetBrains
+```
+
+> heapdump 파일 생성하기
+
+```
+$jmap -dump:format=b,file=heapdump.hprof 671 
+Dumping heap to /Users/kgh/dev/growing-membership/heapdump.hprof ...
+Heap dump file created [1230461904 bytes in 4.880 secs]
+```
+
+heapdump 파일이 생성되고 인텔리제이나 이클립스에서 제공하는 힙 분석툴을 사용해도 된다.
+
+이것을 기반으로 어디서 leak이 발생한지, 확인해볼 수 있다.
